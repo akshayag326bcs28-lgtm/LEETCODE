@@ -1,0 +1,33 @@
+#include <string.h>
+#include <stdbool.h>
+
+bool hasMatch(char* s, char* p) {
+    char prefix[55], suffix[55];
+    int star = 0;
+
+    while (p[star] != '*')
+        star++;
+
+    strncpy(prefix, p, star);
+    prefix[star] = '\0';
+
+    strcpy(suffix, p + star + 1);
+
+    int n = strlen(s);
+    int preLen = strlen(prefix);
+    int sufLen = strlen(suffix);
+
+    for (int i = 0; i <= n - preLen; i++) {
+
+        if (strncmp(s + i, prefix, preLen) != 0)
+            continue;
+
+        for (int j = i + preLen; j <= n - sufLen; j++) {
+
+            if (strncmp(s + j, suffix, sufLen) == 0)
+                return true;
+        }
+    }
+
+    return false;
+}
