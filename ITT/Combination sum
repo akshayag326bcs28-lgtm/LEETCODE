@@ -1,0 +1,31 @@
+class Solution:
+    def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
+        result = []
+        
+        # Optional: Sorting helps us prune the search tree early
+        candidates.sort()
+        
+        def backtrack(start_index: int, current_sum: int, current_combination: list[int]):
+            # Base Case: If we hit the target, save a copy of the combination
+            if current_sum == target:
+                result.append(list(current_combination))
+                return
+            
+            # Explore further candidates starting from start_index to prevent duplicates
+            for i in range(start_index, len(candidates)):
+                # If adding the current candidate exceeds the target, we can stop exploring.
+                # (This optimization works because the candidates array is sorted)
+                if current_sum + candidates[i] > target:
+                    break
+                
+                # Make a choice: add the current candidate
+                current_combination.append(candidates[i])
+                
+                # Recurse: stay at index 'i' because we can reuse the same number
+                backtrack(i, current_sum + candidates[i], current_combination)
+                
+                # Undo choice: backtrack for the next iteration
+                current_combination.pop()
+                
+        backtrack(0, 0, [])
+        return result
