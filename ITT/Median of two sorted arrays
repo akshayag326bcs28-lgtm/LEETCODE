@@ -1,4 +1,4 @@
-lass Solution:
+class Solution:
     def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
         # Ensure nums1 is the smaller array to minimize the binary search range
         if len(nums1) > len(nums2):
